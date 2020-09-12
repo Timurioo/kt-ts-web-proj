@@ -2,7 +2,6 @@ package by.tska.backend
 
 import org.springframework.stereotype.Service
 
-
 @Service
 class UserService(private val userRepository: UserRepository) {
 
@@ -13,7 +12,7 @@ class UserService(private val userRepository: UserRepository) {
     fun findById(id: Long) = userRepository.findById(id)
 
     fun save(user: UserEntity): UserEntity? {
-        val userForComparison: Boolean = userRepository.findByEmail(user.email) != null
+        val userForComparison = userRepository.findByEmail(user.email) != null
         return if (user.id != null || !userForComparison) {
             userRepository.save(user)
         } else null
@@ -23,3 +22,10 @@ class UserService(private val userRepository: UserRepository) {
 
     fun findByRole(role: RoleEntity) = userRepository.findByRole(role)
 }
+
+@Service
+class RoleService(private val rolesRepository: RolesRepository) {
+    fun findById(id: Long) = rolesRepository.findById(id)
+    fun getAllRoles(): List<RoleEntity> = rolesRepository.findAll().toList()
+}
+
